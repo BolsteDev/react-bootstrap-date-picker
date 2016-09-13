@@ -206,7 +206,8 @@ export default React.createClass({
       return;
     }
     this.setState({
-      focused: false
+      /*focused: false,*/
+      showCalendar: false,
     });
     if(this.props.onBlur) {
       this.props.onBlur(e);
@@ -241,7 +242,6 @@ export default React.createClass({
   handleBlur(e){
     this.setState({
       inputFocused: false,
-      showCalendar: false,
     });
   },
   shouldComponentUpdate: function(nextProps, nextState) {
