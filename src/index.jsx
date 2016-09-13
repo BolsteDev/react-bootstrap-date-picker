@@ -139,7 +139,8 @@ export default React.createClass({
       React.PropTypes.object
     ]),
     calendarPlacement: React.PropTypes.string,
-    dateFormat: React.PropTypes.string  // 'MM/DD/YYYY', 'DD/MM/YYYY', 'YYYY/MM/DD', 'DD-MM-YYYY'
+    dateFormat: React.PropTypes.string,  // 'MM/DD/YYYY', 'DD/MM/YYYY', 'YYYY/MM/DD', 'DD-MM-YYYY',
+    showCalendar: React.PropTypes.bool,
   },
   getDefaultProps() {
     const language = typeof window !== "undefined" && window.navigator ? (window.navigator.userLanguage || window.navigator.language || '').toLowerCase() : '';
@@ -154,13 +155,15 @@ export default React.createClass({
       previousButtonElement: "<",
       nextButtonElement: ">",
       calendarPlacement: "bottom",
-      dateFormat: dateFormat
+      dateFormat: dateFormat,
+      showCalendar: false,
     }
   },
   getInitialState() {
     var state = this.makeDateValues(this.props.value);
-    state.focused = false;
-    state.inputFocused = false;
+    /*state.focused = false;*/
+    state.showCalendar = this.props.showCalendar;
+    /*state.inputFocused = false;*/
     state.placeholder = this.props.placeholder || this.props.dateFormat;
     state.separator = this.props.dateFormat.match(/[^A-Z]/)[0];
     return state;
@@ -203,7 +206,8 @@ export default React.createClass({
       return;
     }
     this.setState({
-      focused: false
+      /*focused: false,*/
+      showCalendar: false,
     });
     if(this.props.onBlur) {
       this.props.onBlur(e);
@@ -220,12 +224,16 @@ export default React.createClass({
     }
   },
   handleFocus(e){
-    if(this.state.focused === true) {
+    // if(this.state.focused === true) {
+    //   return;
+    // }
+    if(this.state.showCalendar === true) {
       return;
     }
     this.setState({
-      inputFocused: true,
-      focused: true
+      /*inputFocused: true,*/
+      /*focused: true*/
+      showCalendar: true,
     });
     if(this.props.onFocus) {
       this.props.onFocus(e);
@@ -233,7 +241,7 @@ export default React.createClass({
   },
   handleBlur(e){
     this.setState({
-      inputFocused: false
+      inputFocused: false,
     });
   },
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -371,14 +379,14 @@ export default React.createClass({
       monthLabels={this.props.monthLabels}
       dateFormat={this.props.dateFormat} />;
     return <InputGroup ref="inputGroup" bsClass={this.props.bsClass} bsSize={this.props.bsSize} id={this.props.id ? this.props.id + "_group" : null}>
-      <Overlay rootClose={true} onHide={this.handleHide} show={this.state.focused} container={() => ReactDOM.findDOMNode(this.refs.overlayContainer)} target={() => ReactDOM.findDOMNode(this.refs.input)} placement={this.props.calendarPlacement} delayHide={200}>
+      <Overlay rootClose={true} onHide={this.handleHide} /*show={this.state.focused}*/ show={this.state.showCalendar} container={() => ReactDOM.findDOMNode(this.refs.overlayContainer)} target={() => ReactDOM.findDOMNode(this.refs.input)} placement={this.props.calendarPlacement} delayHide={200}>
         <Popover id="calendar" title={calendarHeader}>
           <Calendar cellPadding={this.props.cellPadding} selectedDate={this.state.selectedDate} displayDate={this.state.displayDate} onChange={this.onChangeDate} dayLabels={this.props.dayLabels} />
         </Popover>
       </Overlay>
       <div ref="overlayContainer" />
       <input type="hidden" id={this.props.id} name={this.props.name} value={this.state.value || ''} />
-      <FormControl
+      {/*<FormControl
         onKeyDown={this.handleKeyDown}
         value={this.state.inputValue || ''}
         ref="input"
@@ -387,7 +395,7 @@ export default React.createClass({
         onFocus={this.handleFocus}
         onBlur={this.handleBlur}
         onChange={this.handleInputChange}
-      />
+      />*/}
       <InputGroup.Addon onClick={this.clear} style={{cursor:this.state.inputValue ? "pointer" : "not-allowed"}}>{this.props.clearButtonElement}</InputGroup.Addon>
     </InputGroup>;
   }
