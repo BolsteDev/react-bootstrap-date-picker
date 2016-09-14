@@ -365,6 +365,7 @@ export default React.createClass({
     }
   },
   render() {
+    console.log(this.state.focused);
     const calendarHeader = <CalendarHeader
       previousButtonElement={this.props.previousButtonElement}
       nextButtonElement={this.props.nextButtonElement}
