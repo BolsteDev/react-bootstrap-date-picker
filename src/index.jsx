@@ -365,7 +365,6 @@ export default React.createClass({
     }
   },
   render() {
-    console.log(this.state.focused);
     const calendarHeader = <CalendarHeader
       previousButtonElement={this.props.previousButtonElement}
       nextButtonElement={this.props.nextButtonElement}
@@ -377,13 +376,20 @@ export default React.createClass({
     let children;
 
     if (this.props.customInputComponent) {
-      children = React.cloneElement(this.props.children, {
-        ...this.props,
-        onFocus: this.handleFocus,
-        onBlur: this.handleBlur,
-        focused: this.state.focused,
-        inputFocused: this.state.inputFocused,
-      });
+      // children = React.cloneElement(this.props.children, {
+      //   ...this.props,
+      //   onFocus: this.handleFocus,
+      //   onBlur: this.handleBlur,
+      //   focused: this.state.focused,
+      //   inputFocused: this.state.inputFocused,
+      // });
+      <input type="text"
+        onFocus={this.handleFocus}
+        onBlur={this.handleBlur}
+        value={this.state.inputValue}
+        onKeyDown={this.handleKeyDown}
+        onChange={this.handleInputChange}
+      />
     } else {
       children = (
         <FormControl
