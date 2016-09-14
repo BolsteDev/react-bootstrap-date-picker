@@ -380,6 +380,8 @@ export default React.createClass({
         ...this.props,
         onFocus: this.handleFocus,
         onBlur: this.handleBlur,
+        focused: this.state.focused,
+        inputFocused: this.state.inputFocused,
       });
     } else {
       children = (
