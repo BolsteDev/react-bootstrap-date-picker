@@ -121,7 +121,7 @@ export default React.createClass({
   propTypes: {
     value: React.PropTypes.string,
     cellPadding: React.PropTypes.string,
-    customInputComponent: React.PropTypes.optionalElement,
+    customInputComponent: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     dayLabels: React.PropTypes.array,
     monthLabels: React.PropTypes.array,
@@ -152,7 +152,7 @@ export default React.createClass({
                     'May', 'June', 'July', 'August', 'September',
                     'October', 'November', 'December'],
       clearButtonElement: "×",
-      customInputComponent: null,
+      customInputComponent: false,
       previousButtonElement: "<",
       nextButtonElement: ">",
       calendarPlacement: "bottom",
@@ -374,10 +374,25 @@ export default React.createClass({
       dateFormat={this.props.dateFormat} />;
 
     if (this.props.customInputComponent) {
+      const childrenWithProps = React.Children.map(this.props.children, (child) => {
+        React.cloneElement(child, {
+          ...this.props,
+        });
+      });
+
       return (
-        <div>
-          Hey a custom component
-        </div>
+        <InputGroup ref="inputGroup" bsClass={this.props.bsClass} bsSize={this.props.bsSize} id={this.props.id ? this.props.id + "_group" : null}>
+          <Overlay rootClose={true} onHide={this.handleHide} show={this.state.focused} container={() => ReactDOM.findDOMNode(this.refs.overlayContainer)} target={() => ReactDOM.findDOMNode(this.refs.input)} placement={this.props.calendarPlacement} delayHide={200}>
+            <Popover id="calendar" title={calendarHeader}>
+              <Calendar cellPadding={this.props.cellPadding} selectedDate={this.state.selectedDate} displayDate={this.state.displayDate} onChange={this.onChangeDate} dayLabels={this.props.dayLabels} />
+            </Popover>
+          </Overlay>
+          <div ref="overlayContainer" />
+          <input type="hidden" id={this.props.id} name={this.props.name} value={this.state.value || ''} />
+          <div>
+            {childrenWithProps}
+          </div>
+        </InputGroup>
       );
     } else {
       return (
