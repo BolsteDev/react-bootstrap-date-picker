@@ -376,11 +376,7 @@ export default React.createClass({
     let children;
 
     if (this.props.customInputComponent) {
-      children = React.Children.map(this.props.children, (child) => {
-        return React.cloneElement(child, {
-          ...this.props,
-        });
-      });
+      children = this.props.children;
     } else {
       children = (
         <FormControl
