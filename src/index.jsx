@@ -383,13 +383,16 @@ export default React.createClass({
       //   focused: this.state.focused,
       //   inputFocused: this.state.inputFocused,
       // });
-      <input type="text"
-        onFocus={this.handleFocus}
-        onBlur={this.handleBlur}
-        value={this.state.inputValue}
-        onKeyDown={this.handleKeyDown}
-        onChange={this.handleInputChange}
-      />
+      <div>
+        <input type="text"
+          onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
+          value={this.state.inputValue}
+          onKeyDown={this.handleKeyDown}
+          onChange={this.handleInputChange}
+        />
+        <p>Hello World</p>
+      </div>
     } else {
       children = (
         <FormControl
