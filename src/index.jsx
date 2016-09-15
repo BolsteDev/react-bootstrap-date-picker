@@ -383,11 +383,13 @@ export default React.createClass({
     let children;
 
     if (this.props.customInputComponent) {
-      children = (
-        <div>
-          {this.props.children}
-        </div>
-      );
+      children = React.Children.map(this.props.children, (child) => {
+        return React.cloneElement(child, {
+          onFocus: this.handleFocus,
+          onBlur: this.handleBlur,
+          focused: this.state.focused,
+        });
+      });
     } else {
       children = (
         <FormControl
