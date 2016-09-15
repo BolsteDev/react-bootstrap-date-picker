@@ -121,7 +121,7 @@ export default React.createClass({
   propTypes: {
     value: React.PropTypes.string,
     cellPadding: React.PropTypes.string,
-    customInputComponent: React.PropTypes.bool,
+    separateInputs: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     dayLabels: React.PropTypes.array,
     monthLabels: React.PropTypes.array,
@@ -152,7 +152,7 @@ export default React.createClass({
                     'May', 'June', 'July', 'August', 'September',
                     'October', 'November', 'December'],
       clearButtonElement: "×",
-      customInputComponent: false,
+      separateInputs: false,
       previousButtonElement: "<",
       nextButtonElement: ">",
       calendarPlacement: "bottom",
@@ -375,24 +375,33 @@ export default React.createClass({
 
     let children;
 
-    if (this.props.customInputComponent) {
-      // children = React.cloneElement(this.props.children, {
-      //   ...this.props,
-      //   onFocus: this.handleFocus,
-      //   onBlur: this.handleBlur,
-      //   focused: this.state.focused,
-      //   inputFocused: this.state.inputFocused,
-      // });
+    if (this.props.separateInputs) {
       children = (
         <div>
-          <input type="text"
+          <FormControl
+            type="text"
+            ref="month"
+            placeholder="MM"
+            value={this.state.month}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
-            value={this.state.inputValue}
-            onKeyDown={this.handleKeyDown}
-            onChange={this.handleInputChange}
           />
-          <p>Hello World</p>
+          <FormControl
+            type="text"
+            ref="day"
+            placeholder="DD"
+            value={this.state.day}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+          />
+          <FormControl
+            type="text"
+            ref="year"
+            placeholder="YY"
+            value={this.state.year}
+            onFocus={this.handleFocus}
+            onBlur={this.handleBlur}
+          />
         </div>
       );
     } else {
