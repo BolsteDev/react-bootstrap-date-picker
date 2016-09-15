@@ -121,7 +121,7 @@ export default React.createClass({
   propTypes: {
     value: React.PropTypes.string,
     cellPadding: React.PropTypes.string,
-    separateInputs: React.PropTypes.bool,
+    customInputComponent: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     dayLabels: React.PropTypes.array,
     monthLabels: React.PropTypes.array,
@@ -152,7 +152,7 @@ export default React.createClass({
                     'May', 'June', 'July', 'August', 'September',
                     'October', 'November', 'December'],
       clearButtonElement: "×",
-      separateInputs: false,
+      customInputComponent: false,
       previousButtonElement: "<",
       nextButtonElement: ">",
       calendarPlacement: "bottom",
@@ -234,10 +234,16 @@ export default React.createClass({
     }
   },
   handleBlur(e){
-    this.setState({
-      inputFocused: false,
-      focused: false,
-    });
+    if (this.props.customInputComponent) {
+      this.setState({
+        inputFocused: false,
+        focused: false,
+      });
+    } else {
+      this.setState({
+        inputFocused: false,
+      });
+    }
   },
   shouldComponentUpdate: function(nextProps, nextState) {
     return !(this.state.inputFocused === true && nextState.inputFocused === false);
@@ -376,33 +382,10 @@ export default React.createClass({
 
     let children;
 
-    if (this.props.separateInputs) {
+    if (this.props.customInputComponent) {
       children = (
         <div>
-          <FormControl
-            type="text"
-            ref="month"
-            placeholder="MM"
-            value={this.state.month}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-          />
-          <FormControl
-            type="text"
-            ref="day"
-            placeholder="DD"
-            value={this.state.day}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-          />
-          <FormControl
-            type="text"
-            ref="year"
-            placeholder="YY"
-            value={this.state.year}
-            onFocus={this.handleFocus}
-            onBlur={this.handleBlur}
-          />
+          {this.props.children}
         </div>
       );
     } else {
