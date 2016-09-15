@@ -235,7 +235,8 @@ export default React.createClass({
   },
   handleBlur(e){
     this.setState({
-      inputFocused: false
+      inputFocused: false,
+      focused: false,
     });
   },
   shouldComponentUpdate: function(nextProps, nextState) {
