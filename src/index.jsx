@@ -383,7 +383,7 @@ export default React.createClass({
       //   focused: this.state.focused,
       //   inputFocused: this.state.inputFocused,
       // });
-      return (
+      children = (
         <div>
           <input type="text"
             onFocus={this.handleFocus}
