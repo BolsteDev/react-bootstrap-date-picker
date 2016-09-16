@@ -393,13 +393,13 @@ export default React.createClass({
         <input type="hidden" id={this.props.id} name={this.props.name} value={this.state.value || ''} />
           {
             React.Children.map(this.props.children, (child) => {
-            return React.cloneElement(child, {
-              onFocus: this.handleFocus,
-              onBlur: this.handleBlur,
-              focused: this.state.focused,
+              return React.cloneElement(child, {
+                onFocus: this.handleFocus,
+                onBlur: this.handleBlur,
+                focused: this.state.focused,
+              });
             });
-          });
-        }
+          }
       </InputGroup>
     } else {
       return (
