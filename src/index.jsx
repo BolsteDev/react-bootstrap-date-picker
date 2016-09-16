@@ -394,7 +394,7 @@ export default React.createClass({
       return (
         <InputGroup ref="inputGroup" bsClass={this.props.bsClass} bsSize={this.props.bsSize} id={this.props.id ? this.props.id + "_group" : null}>
           <Overlay rootClose={true} onHide={this.handleHide} show={this.state.focused} container={() => ReactDOM.findDOMNode(this.refs.overlayContainer)} target={() => ReactDOM.findDOMNode(this.refs.input)} placement={this.props.calendarPlacement} delayHide={200}>
-            <Popover id="calendar" title={calendarHeader} positionLeft="-44px" positionTop="28px">
+            <Popover id="calendar" title={calendarHeader} style={{left: '-44px', top: '28px'}} positionLeft="-44px" positionTop="28px">
               <Calendar cellPadding={this.props.cellPadding} selectedDate={this.state.selectedDate} displayDate={this.state.displayDate} onChange={this.onChangeDate} dayLabels={this.props.dayLabels} />
             </Popover>
           </Overlay>
