@@ -392,7 +392,7 @@ export default React.createClass({
         <div ref="overlayContainer" />
         <input type="hidden" id={this.props.id} name={this.props.name} value={this.state.value || ''} />
           {
-            const children = React.Children.map(this.props.children, (child) => {
+            children = React.Children.map(this.props.children, (child) => {
               return React.cloneElement(child, {
                 onFocus: this.handleFocus,
                 onBlur: this.handleBlur,
