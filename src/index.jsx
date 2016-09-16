@@ -383,39 +383,46 @@ export default React.createClass({
     let children;
 
     if (this.props.customInputComponent) {
-      children = React.Children.map(this.props.children, (child) => {
-        return React.cloneElement(child, {
-          onFocus: this.handleFocus,
-          onBlur: this.handleBlur,
-          focused: this.state.focused,
-        });
-      });
-    } else {
-      children = (
-        <FormControl
-          onKeyDown={this.handleKeyDown}
-          value={this.state.inputValue || ''}
-          ref="input"
-          type="text"
-          placeholder={this.state.focused ? this.props.dateFormat : this.state.placeholder}
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-          onChange={this.handleInputChange}
-        />
-      );
-    }
-
-    return (
       <InputGroup ref="inputGroup" bsClass={this.props.bsClass} bsSize={this.props.bsSize} id={this.props.id ? this.props.id + "_group" : null}>
         <Overlay rootClose={true} onHide={this.handleHide} show={this.state.focused} container={() => ReactDOM.findDOMNode(this.refs.overlayContainer)} target={() => ReactDOM.findDOMNode(this.refs.input)} placement={this.props.calendarPlacement} delayHide={200}>
-          <Popover id="calendar" title={calendarHeader}>
+          <Popover id="calendar" title={calendarHeader} positionLeft="-44px" positionTop="28px">
             <Calendar cellPadding={this.props.cellPadding} selectedDate={this.state.selectedDate} displayDate={this.state.displayDate} onChange={this.onChangeDate} dayLabels={this.props.dayLabels} />
           </Popover>
         </Overlay>
         <div ref="overlayContainer" />
         <input type="hidden" id={this.props.id} name={this.props.name} value={this.state.value || ''} />
-        {children}
+          {
+            React.Children.map(this.props.children, (child) => {
+            return React.cloneElement(child, {
+              onFocus: this.handleFocus,
+              onBlur: this.handleBlur,
+              focused: this.state.focused,
+            });
+          });
+        }
       </InputGroup>
-    );
+    } else {
+      return (
+        <InputGroup ref="inputGroup" bsClass={this.props.bsClass} bsSize={this.props.bsSize} id={this.props.id ? this.props.id + "_group" : null}>
+          <Overlay rootClose={true} onHide={this.handleHide} show={this.state.focused} container={() => ReactDOM.findDOMNode(this.refs.overlayContainer)} target={() => ReactDOM.findDOMNode(this.refs.input)} placement={this.props.calendarPlacement} delayHide={200}>
+            <Popover id="calendar" title={calendarHeader}>
+              <Calendar cellPadding={this.props.cellPadding} selectedDate={this.state.selectedDate} displayDate={this.state.displayDate} onChange={this.onChangeDate} dayLabels={this.props.dayLabels} />
+            </Popover>
+          </Overlay>
+          <div ref="overlayContainer" />
+          <input type="hidden" id={this.props.id} name={this.props.name} value={this.state.value || ''} />
+            <FormControl
+              onKeyDown={this.handleKeyDown}
+              value={this.state.inputValue || ''}
+              ref="input"
+              type="text"
+              placeholder={this.state.focused ? this.props.dateFormat : this.state.placeholder}
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
+              onChange={this.handleInputChange}
+            />
+        </InputGroup>
+      );
+    }
   }
 });
